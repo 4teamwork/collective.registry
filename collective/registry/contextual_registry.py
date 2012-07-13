@@ -1,3 +1,4 @@
+from Acquisition import aq_base
 from zope import interface
 from plone.registry import interfaces
 from plone.app.registry import Registry
@@ -13,7 +14,7 @@ class ContextualRegistry(object):
     interface.implements(interfaces.IRegistry)
     def __init__(self, context):
         self.context = context
-        self.registry = getattr(self.context, ATTRIBUTE_NAME, None)
+        self.registry = getattr(aq_base(self.context), ATTRIBUTE_NAME, None)
     
     def initialize_registry(self):
         if self.registry is None:
